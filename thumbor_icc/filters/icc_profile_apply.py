@@ -24,33 +24,41 @@ class Filter(BaseFilter):
 
         for path in self.context.config.ICC_PATH:
             filepath = os.path.join(path, iccfile)
-            logger.debug('Checking for ICC profile in {:s}'.format(filepath))
+            logger.debug('ICC: Checking for profile in {:s}'.format(filepath))
             if os.path.exists(filepath):
                 return filepath
 
 
     @filter_method(BaseFilter.String)
     def icc_profile_apply(self, profile=None):
+        # Check whether input image has color management.
         if not self.engine.icc_profile:
-            logger.info('Input image has no embedded profile. Cannot convert.')
+            logger.info('ICC: Image has no embedded profile. Skipping this image.')
             return
+
+        # Sanitize profile parameter.
+        if profile != None:
+            profile = os.path.basename(profile).lstrip('.')
+            if len(profile) == 0:
+                logger.warning('ICC: Invalid profile name.')
+                return
+
+        # Find output profile.
+        outprofile = self._find_profile(profile)
+        if not outprofile:
+            logger.warning('ICC: Failed to load profile: {:s}'.format(profile))
+            return
+
 
         inmode = self.engine.get_image_mode()
         insize = self.engine.size
         inimg = Image.frombytes(inmode, insize, self.engine.get_image_data())
-
         inprofile = StringIO(self.engine.icc_profile)
-
         outmode = 'RGBA' if 'A' in inmode else 'RGB'
-        outprofile = self._find_profile(profile)
 
-        if not outprofile:
-            logger.warning('Failed to load ICC profile: {:s}'.format(profile))
-            return
-
-        logger.debug('Attempting to convert to ICC profile: {:s}'.format(profile))
+        logger.debug('ICC: Attempting to apply profile: {:s}'.format(profile))
         try:
             outimg = ImageCms.profileToProfile(inimg, inprofile, outprofile, outputMode=outmode)
             self.engine.set_image_data(outimg.tostring())
         except:
-            logger.error('Failed to convert to ICC profile: {:s}'.format(profile))
+            logger.error('ICC: Failed to apply profile: {:s}'.format(profile))
