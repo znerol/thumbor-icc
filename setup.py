@@ -1,11 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
+
 
 setup(
     name = "thumbor_icc",
-    packages = ["thumbor_icc"],
+    packages = find_packages(),
     version = '0.1',
     description = "Color management filters for thumbor",
     author = "Lorenz Schori",
