@@ -11,6 +11,7 @@ from thumbor.filters import BaseFilter, filter_method, PHASE_AFTER_LOAD
 from thumbor.utils import logger
 
 import os
+import sys
 
 class Filter(BaseFilter):
 
