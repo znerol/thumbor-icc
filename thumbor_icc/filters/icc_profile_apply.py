@@ -49,16 +49,37 @@ class Filter(BaseFilter):
             logger.warning('ICC: Failed to load profile: {:s}'.format(profile))
             return
 
+        try:
+            ext = self.engine.extension
+            fmt = Image.EXTENSION[ext.lower()]
+        except:
+            logger.exception('ICC: Failed to determine image format and extension before attempting to apply profile: {:s}'.format(profile))
+            return
 
-        inmode = self.engine.get_image_mode()
-        insize = self.engine.size
-        inimg = Image.frombytes(inmode, insize, self.engine.get_image_data())
-        inprofile = StringIO(self.engine.icc_profile)
-        outmode = 'RGBA' if 'A' in inmode else 'RGB'
+        try:
+            inmode = self.engine.get_image_mode()
+            insize = self.engine.size
+            inimg = Image.frombytes(inmode, insize, self.engine.get_image_data())
+            inprofile = StringIO(self.engine.icc_profile)
+            outmode = 'RGBA' if 'A' in inmode else 'RGB'
+        except:
+            logger.exception('ICC: Failed to determine image properties before attempting to apply profile: {:s}'.format(profile))
+            return
 
         logger.info('ICC: Attempting to apply profile: {:s}, inmode: {:s}, outmode: {:s}'.format(profile, inmode, outmode))
         try:
             outimg = ImageCms.profileToProfile(inimg, inprofile, outprofile, outputMode=outmode)
-            self.engine.set_image_data(outimg.tostring())
         except:
             logger.exception('ICC: Failed to apply profile: {:s}, inmode: {:s}, outmode: {:s}'.format(profile, inmode, outmode))
+            return
+
+        # Reload the image into the engine.
+        outbuf = StringIO()
+        try:
+            outimg.save(outbuf, fmt)
+            self.engine.load(outbuf.getvalue(), ext)
+        except:
+            logger.exception('ICC: Failed load the image with an applied profile: {:s}, inmode: {:s}, outmode: {:s}'.format(profile, inmode, outmode))
+            return
+        finally:
+            outbuf.close()
