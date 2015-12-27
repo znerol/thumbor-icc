@@ -11,7 +11,6 @@ from thumbor.filters import BaseFilter, filter_method, PHASE_AFTER_LOAD
 from thumbor.utils import logger
 
 import os
-import sys
 
 class Filter(BaseFilter):
 
@@ -57,9 +56,9 @@ class Filter(BaseFilter):
         inprofile = StringIO(self.engine.icc_profile)
         outmode = 'RGBA' if 'A' in inmode else 'RGB'
 
-        logger.debug('ICC: Attempting to apply profile: {:s}'.format(profile))
+        logger.info('ICC: Attempting to apply profile: {:s}, inmode: {:s}, outmode: {:s}'.format(profile, inmode, outmode))
         try:
             outimg = ImageCms.profileToProfile(inimg, inprofile, outprofile, outputMode=outmode)
             self.engine.set_image_data(outimg.tostring())
         except:
-            logger.error('ICC: Failed to apply profile: {:s}'.format(profile))
+            logger.exception('ICC: Failed to apply profile: {:s}, inmode: {:s}, outmode: {:s}'.format(profile, inmode, outmode))
