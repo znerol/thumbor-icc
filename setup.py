@@ -13,7 +13,7 @@ setup(
     author_email = "lo@znerol.ch",
     keywords = ["thumbor", "icc", "images"],
     license = 'MIT',
-    url = 'https://github.com/znerol/thumbor_icc',
+    url = 'https://github.com/znerol/thumbor-icc',
     classifiers = ['Development Status :: 4 - Beta',
                    'Intended Audience :: Developers',
                    'License :: OSI Approved :: MIT License',
