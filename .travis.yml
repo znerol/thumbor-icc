@@ -20,6 +20,7 @@ addons:
       - libimage-exiftool-perl
       - libjpeg-dev
       - libjpeg-progs
+      - liblcms2-dev
       - libopencv-dev
       - libpng-dev
       - libssl-dev
