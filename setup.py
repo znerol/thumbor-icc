@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 setup(
     name="thumbor_icc",
     packages=find_packages(),
-    version="0.1.1",
+    version="1.0.0",
     description="Color management filters for thumbor",
     author="Lorenz Schori",
     author_email="lo@znerol.ch",
@@ -20,11 +20,13 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Operating System :: POSIX :: Linux",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Multimedia :: Graphics :: Presentation"
     ],
     install_requires=[
-        "thumbor<7.0.0",
+        "thumbor>7.0.0.dev0",
         "Pillow"
     ],
     long_description="""\

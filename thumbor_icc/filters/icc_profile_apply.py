@@ -48,7 +48,7 @@ class Filter(BaseFilter):
     # pylint: disable=R0911
     # pylint: disable=W0703
     @filter_method(BaseFilter.String)
-    def icc_profile_apply(self, profile=None):
+    async def icc_profile_apply(self, profile=None):
         """
         Optain an RGB(A) image by applying the given profile.
         """
