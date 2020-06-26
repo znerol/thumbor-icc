@@ -22,7 +22,10 @@ setup(
                    'Programming Language :: Python :: 2.7',
                    'Topic :: Multimedia :: Graphics :: Presentation'
     ],
-    install_requires=["thumbor", "Pillow"],
+    install_requires=[
+        "thumbor<7.0.0",
+        "Pillow"
+    ],
     long_description = """\
 Thumbor is a smart imaging service. It enables on-demand crop, resizing and flipping of images.
 This module provide support for color management profiles.
