@@ -28,7 +28,6 @@ addons:
       - python3-numpy
       - python3-opencv
       - python3-pycurl
-      - python3-pyexiv2
       - scons
       - webp
 

@@ -1,3 +1,3 @@
 pyflakes
 pylint
-thumbor[tests]>=7.0.0.dev0
+thumbor>=7.0.0.dev0
