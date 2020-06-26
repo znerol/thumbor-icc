@@ -1,0 +1,37 @@
+---
+language: python
+python:
+  - 2.7
+cache:
+  apt: true
+  pip: true
+addons:
+  apt:
+    packages:
+      - build-essential
+      - ffmpeg
+      - gifsicle
+      - libass-dev
+      - libboost-python-dev
+      - libcurl4-openssl-dev
+      - libexiv2-dev
+      - libgnutls28-dev
+      - libimage-exiftool-perl
+      - libjpeg-dev
+      - libjpeg-progs
+      - libopencv-dev
+      - libpng-dev
+      - libssl-dev
+      - libvpx-dev
+      - libwebp-dev
+      - libx264-dev
+      - scons
+      - webp
+
+install:
+  - pip install -U pip wheel
+  - pip install -r test-requirements.txt
+  - pip install -e .
+script:
+  - pylint thumbor_icc
+  - pyflakes thumbor_icc
