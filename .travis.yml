@@ -2,7 +2,9 @@
 dist: bionic
 language: python
 python:
-  - 3.7
+  - 3.6
+virtualenv:
+  system_site_packages: true
 cache:
   apt: true
   pip: true
@@ -14,19 +16,20 @@ addons:
       - gifsicle
       - libass-dev
       - libboost-python-dev
-      - libcurl4-openssl-dev
       - libexiv2-dev
       - libgnutls28-dev
       - libimage-exiftool-perl
       - libjpeg-dev
       - libjpeg-progs
       - liblcms2-dev
-      - libopencv-dev
       - libpng-dev
       - libssl-dev
       - libvpx-dev
       - libwebp-dev
       - libx264-dev
+      - python3-numpy
+      - python3-opencv
+      - python3-pycurl
       - scons
       - webp
 
