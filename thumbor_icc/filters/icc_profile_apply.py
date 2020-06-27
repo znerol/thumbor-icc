@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 import os
 
-from io import StringIO
+from io import BytesIO
 
 from PIL import Image, ImageCms
 from thumbor.filters import BaseFilter, filter_method, PHASE_AFTER_LOAD
@@ -92,7 +92,7 @@ class Filter(BaseFilter):
             # pylint: disable=C0123
             if type(profile_data) == tuple:
                 profile_data = profile_data[0]
-            inprofile = StringIO(profile_data)
+            inprofile = BytesIO(profile_data)
 
             outmode = "RGBA" if "A" in inmode else "RGB"
         except Exception:
@@ -113,7 +113,7 @@ class Filter(BaseFilter):
             return
 
         # Reload the image into the engine.
-        outbuf = StringIO()
+        outbuf = BytesIO()
         try:
             outimg.save(outbuf, fmt)
             self.engine.load(outbuf.getvalue(), ext)
