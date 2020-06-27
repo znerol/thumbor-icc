@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 import os
 
-from cStringIO import StringIO
+from io import StringIO
 
 from PIL import Image, ImageCms
 from thumbor.filters import BaseFilter, filter_method, PHASE_AFTER_LOAD
