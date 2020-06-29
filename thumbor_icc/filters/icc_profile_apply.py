@@ -6,10 +6,6 @@ A collection of thumbor filters providing better support for color managed
 images.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import unicode_literals
-
 import os
 
 from io import BytesIO
