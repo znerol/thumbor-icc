@@ -81,14 +81,7 @@ class Filter(BaseFilter):
             insize = self.engine.size
             indata = self.engine.get_image_data()
             inimg = Image.frombytes(inmode, insize, indata)
-
-            # In PIL>=3.0.0 / Thumbor 6, icc_profile is sometimes a tuple :/
-            # https://github.com/python-pillow/Pillow/issues/1462
-            profile_data = self.engine.icc_profile
-            # pylint: disable=C0123
-            if type(profile_data) == tuple:
-                profile_data = profile_data[0]
-            inprofile = BytesIO(profile_data)
+            inprofile = BytesIO(self.engine.icc_profile)
 
             outmode = "RGBA" if "A" in inmode else "RGB"
         except Exception:
