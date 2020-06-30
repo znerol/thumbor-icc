@@ -2,6 +2,7 @@
 dist: bionic
 language: python
 python:
+  - 3.6
   - 3.7
 cache:
   apt: true
@@ -13,9 +14,7 @@ addons:
       - ffmpeg
       - gifsicle
       - libass-dev
-      - libboost-python-dev
       - libcurl4-openssl-dev
-      - libexiv2-dev
       - libgnutls28-dev
       - libimage-exiftool-perl
       - libjpeg-dev

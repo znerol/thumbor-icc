@@ -6,13 +6,9 @@ A collection of thumbor filters providing better support for color managed
 images.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import unicode_literals
-
 import os
 
-from cStringIO import StringIO
+from io import BytesIO
 
 from PIL import Image, ImageCms
 from thumbor.filters import BaseFilter, filter_method, PHASE_AFTER_LOAD
@@ -85,14 +81,7 @@ class Filter(BaseFilter):
             insize = self.engine.size
             indata = self.engine.get_image_data()
             inimg = Image.frombytes(inmode, insize, indata)
-
-            # In PIL>=3.0.0 / Thumbor 6, icc_profile is sometimes a tuple :/
-            # https://github.com/python-pillow/Pillow/issues/1462
-            profile_data = self.engine.icc_profile
-            # pylint: disable=C0123
-            if type(profile_data) == tuple:
-                profile_data = profile_data[0]
-            inprofile = StringIO(profile_data)
+            inprofile = BytesIO(self.engine.icc_profile)
 
             outmode = "RGBA" if "A" in inmode else "RGB"
         except Exception:
@@ -113,7 +102,7 @@ class Filter(BaseFilter):
             return
 
         # Reload the image into the engine.
-        outbuf = StringIO()
+        outbuf = BytesIO()
         try:
             outimg.save(outbuf, fmt)
             self.engine.load(outbuf.getvalue(), ext)
