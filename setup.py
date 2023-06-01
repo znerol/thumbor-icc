@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 setup(
     name="thumbor_icc",
     packages=find_packages(),
-    version="1.0.0",
+    version="1.1.1",
     description="Color management filters for thumbor",
     author="Lorenz Schori",
     author_email="lo@znerol.ch",
